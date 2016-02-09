@@ -1,20 +1,50 @@
 package com.ihuxu.chatx.view;
 
-import java.awt.Cursor;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JFrame;
 
-public class List extends JFrame implements KeyListener, MouseListener {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class List extends CommonView implements KeyListener, MouseListener {
 
 	private static final long serialVersionUID = 1101068431445178024L;
-
+	JPanel backgroundPanel, bannerPanel, searchPanel, listPanel, footerPanel;
+	JButton closeButton;
+	
 	public List() {
+		
+		/** main panel**/
+		this.backgroundPanel = new BackgroundPanel();
+		this.backgroundPanel.setPreferredSize(new Dimension(280, 700));
+		this.add(this.backgroundPanel);
+		
+		/** banner **/
+		this.bannerPanel = new JPanel();
+		this.bannerPanel.setLayout(null);
+		this.bannerPanel.setPreferredSize(new Dimension(280, 110));
+		this.bannerPanel.setBackground(Color.red);
+//		this.bannerPanel.setOpaque(false);
+		
+		/** close button **/
+		this.closeButton = new JButton(new ImageIcon("resource/image/close_press.png"));
+		this.closeButton.setBounds(250, -8, 30, 30);
+		this.closeButton.setContentAreaFilled(false);
+		this.closeButton.setFocusPainted(false);
+		this.closeButton.setBorderPainted(false);
+		this.closeButton.setOpaque(false);
+		this.closeButton.setBorder(null);
+		this.closeButton.addMouseListener(this);
+		this.bannerPanel.add(this.closeButton);
+		this.backgroundPanel.add(this.bannerPanel);
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(screenSize.width / 2 - 280 /2 , screenSize.height / 2 - 700 / 2);
 		this.setUndecorated(true);
@@ -24,34 +54,27 @@ public class List extends JFrame implements KeyListener, MouseListener {
 		this.setVisible(true);
 	}
 	
-	Point loc = null;
-	Point tmp = null;
-	boolean isDragged = false;
 	
-	private void setDragable(JFrame jFrame) {
-		this.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-				isDragged = false;
-				jFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				tmp = new Point(e.getX(), e.getY());
-				isDragged = true;
-				jFrame.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-			}
-		});
-		this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-			public void mouseDragged(java.awt.event.MouseEvent e) {
-				if (isDragged) {
-					loc = new Point(jFrame.getLocation().x + e.getX() - tmp.x,
-							jFrame.getLocation().y + e.getY() - tmp.y);
-					jFrame.setLocation(loc);
-				}
-			}
-		});
+	class BackgroundPanel extends JPanel {
+		private static final long serialVersionUID = -8637125902711760622L;
+		
+	    public void paintComponent(Graphics g) {
+	         int x = 0, y = 0;
+	         ImageIcon icon=new ImageIcon("resource/image/list_bg.jpg");
+	         g.drawImage(icon.getImage(), x, y, getSize().width, getSize().height, this);
+	         while(true) {
+	        	 g.drawImage(icon.getImage(), x, y, this);
+	             if(x > getSize().width && y > getSize().height)break;
+	             if(x > getSize().width) {
+	            	 x = 0;
+	            	 y += icon.getIconHeight();
+	             } else {
+	            	 x +=icon.getIconWidth();
+	             }
+	         }
+	    }
 	}
-
+	      
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

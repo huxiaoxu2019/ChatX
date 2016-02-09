@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Login extends JFrame implements MouseListener, KeyListener{
+public class Login extends CommonView implements MouseListener, KeyListener{
 
 	private static final long serialVersionUID = 6879982149242897670L;
 
@@ -180,34 +180,6 @@ public class Login extends JFrame implements MouseListener, KeyListener{
 		this.setResizable(false);
 		this.setDragable(this);
 		this.setVisible(true);
-	}
-
-	Point loc = null;
-	Point tmp = null;
-	boolean isDragged = false;
-	
-	private void setDragable(JFrame jFrame) {
-		this.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseReleased(java.awt.event.MouseEvent e) {
-				isDragged = false;
-				jFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-
-			public void mousePressed(java.awt.event.MouseEvent e) {
-				tmp = new Point(e.getX(), e.getY());
-				isDragged = true;
-				jFrame.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-			}
-		});
-		this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-			public void mouseDragged(java.awt.event.MouseEvent e) {
-				if (isDragged) {
-					loc = new Point(jFrame.getLocation().x + e.getX() - tmp.x,
-							jFrame.getLocation().y + e.getY() - tmp.y);
-					jFrame.setLocation(loc);
-				}
-			}
-		});
 	}
 
 	@Override
