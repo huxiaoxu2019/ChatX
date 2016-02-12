@@ -1,7 +1,9 @@
 package com.ihuxu.chatx.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
@@ -9,25 +11,32 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 
 public class List extends CommonView implements KeyListener, MouseListener {
 
 	private static final long serialVersionUID = 1101068431445178024L;
-	JPanel backgroundPanel, bannerPanel, searchPanel, listPanel, footerPanel;
+	JPanel backgroundPanel, bannerPanel, searchPanel, listPanel, footerPanel, scrollPanePanel;
 	JButton closeButton;
 	JLabel leftTopTitleLabel, avatarLabel, nickNameLabel, searchLabel;
 	JTextField searchInput;
 	JScrollPane listScrollPane;
+	JLabel[] friendListLabel;
+	JPanel[] friendListPanel;
 	
 	public List() {
 		
@@ -103,16 +112,43 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		this.listPanel = new JPanel();
 		this.listPanel.setBounds(0, 140, 280, 500);
 		this.listPanel.setLayout(null);
-		this.listPanel.setBackground(new Color(1, 1, 1, 0.7f));
+		this.listPanel.setOpaque(false);
 		
 		/** scrollpane **/
 		this.listScrollPane = new JScrollPane();
 		this.listScrollPane.setPreferredSize(new Dimension(280, 500));
 		this.listScrollPane.setBorder(null);
-		this.listScrollPane.setBounds(0, -5, 280, 510);
-		this.listScrollPane.getViewport().setOpaque(false);
-		this.listScrollPane.setOpaque(false);
+		this.listScrollPane.setBounds(0, 0, 280, 510);
+		this.listScrollPane.setBackground(new Color(1, 1, 1, 0.5f));
+		this.listScrollPane.getViewport().setBackground(new Color(1, 1, 1, 0.5f));
 		
+		/** friendlist jlabel **/
+		this.scrollPanePanel = new JPanel();
+		this.scrollPanePanel.setBounds(0, 0, 280, 500);
+		this.scrollPanePanel.setOpaque(false);
+		this.scrollPanePanel.setLayout(null);
+		this.friendListLabel = new JLabel[2];
+		this.friendListPanel = new JPanel[2];
+		
+		for(int i = 0; i < this.friendListLabel.length; i++) {
+			this.friendListPanel[i] = new JPanel();
+			this.friendListPanel[i].addMouseListener(new FriendListPanelListener());
+			this.friendListPanel[i].setOpaque(false);
+			this.friendListPanel[i].setLayout(null);
+			this.friendListPanel[i].setBounds(0, 50 * i, 280, 50);
+			int top = 0;
+			if(i == 0) {
+				top = 1;
+			}
+			this.friendListPanel[i].setBorder(BorderFactory.createMatteBorder(top, 0, 1, 0, new Color(220, 219, 222)));
+			this.friendListLabel[i] = new JLabel(new ImageIcon("resource/image/avatar_40_40.png"));
+			this.friendListLabel[i].setBounds(2, 0, 50, 50);
+			this.friendListPanel[i].add(this.friendListLabel[i]);
+			this.scrollPanePanel.add(this.friendListPanel[i]);
+		}
+		
+		
+		this.listScrollPane.setViewportView(this.scrollPanePanel);
 		this.listPanel.add(this.listScrollPane);
 		this.backgroundPanel.add(this.listPanel);
 		
@@ -197,14 +233,13 @@ public class List extends CommonView implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -227,6 +262,24 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		// TODO Auto-generated method stub
 
 	}
+	
+	class FriendListPanelListener extends MouseAdapter{
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			System.out.println("mouse entered the friendlist panel event.");
+			JPanel jPanel = (JPanel)e.getSource();
+			jPanel.setOpaque(true);
+			jPanel.setBackground(new Color(249, 238, 194));
+			List.this.update(List.this.getGraphics());
+		}
 
+		@Override
+		public void mouseExited(MouseEvent e) {
+			System.out.println("mouse exited the friendlist panel event.");
+			JPanel jPanel = (JPanel)e.getSource();
+			jPanel.setOpaque(false);
+			List.this.update(List.this.getGraphics());
+		}
+	}
 	
 }
