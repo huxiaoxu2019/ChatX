@@ -16,7 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
 
 public class List extends CommonView implements KeyListener, MouseListener {
 
@@ -25,6 +27,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	JButton closeButton;
 	JLabel leftTopTitleLabel, avatarLabel, nickNameLabel, searchLabel;
 	JTextField searchInput;
+	JScrollPane listScrollPane;
 	
 	public List() {
 		
@@ -96,6 +99,30 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		
 		this.backgroundPanel.add(this.searchPanel);
 		
+		/** list panel **/
+		this.listPanel = new JPanel();
+		this.listPanel.setBounds(0, 140, 280, 500);
+		this.listPanel.setLayout(null);
+		this.listPanel.setBackground(new Color(1, 1, 1, 0.7f));
+		
+		/** scrollpane **/
+		this.listScrollPane = new JScrollPane();
+		this.listScrollPane.setPreferredSize(new Dimension(280, 500));
+		this.listScrollPane.setBorder(null);
+		this.listScrollPane.setBounds(0, -5, 280, 510);
+		this.listScrollPane.getViewport().setOpaque(false);
+		this.listScrollPane.setOpaque(false);
+		
+		this.listPanel.add(this.listScrollPane);
+		this.backgroundPanel.add(this.listPanel);
+		
+		/** footer panel **/
+		this.footerPanel = new JPanel();
+		this.footerPanel.setBackground(new Color(1, 1, 1, 0.95f));
+		this.footerPanel.setBounds(0, 640, 280, 60);
+		
+		this.backgroundPanel.add(this.footerPanel);
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.addMouseListener(this);
 		this.setLocation(screenSize.width / 2 - 280 /2 , screenSize.height / 2 - 700 / 2);
@@ -114,9 +141,10 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	         int x = 0, y = 0;
 	         ImageIcon icon=new ImageIcon("resource/image/list_bg.jpg");
 	         g.drawImage(icon.getImage(), x, y, getSize().width, getSize().height, this);
+	         /**
 	         while(true) {
 	        	 g.drawImage(icon.getImage(), x, y, this);
-	             if(x > getSize().width && y > getSize().height)break;
+	             if(x > getSize().width && y > getSize().height) break;
 	             if(x > getSize().width) {
 	            	 x = 0;
 	            	 y += icon.getIconHeight();
@@ -124,6 +152,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	            	 x +=icon.getIconWidth();
 	             }
 	         }
+	         **/
 	    }
 	}
 	      
@@ -199,4 +228,5 @@ public class List extends CommonView implements KeyListener, MouseListener {
 
 	}
 
+	
 }

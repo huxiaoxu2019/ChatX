@@ -1,5 +1,6 @@
 package com.ihuxu.chatx.view;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Point;
 
@@ -13,25 +14,25 @@ abstract public class CommonView extends JFrame{
 	Point tmp 			= null;
 	boolean isDragged   = false;
 	
-	protected void setDragable(JFrame jFrame) {
+	protected void setDragable(Component component) {
 		this.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseReleased(java.awt.event.MouseEvent e) {
 				isDragged = false;
-				jFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 
 			public void mousePressed(java.awt.event.MouseEvent e) {
 				tmp = new Point(e.getX(), e.getY());
 				isDragged = true;
-				jFrame.setCursor(new Cursor(Cursor.MOVE_CURSOR));
+				component.setCursor(new Cursor(Cursor.MOVE_CURSOR));
 			}
 		});
 		this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
 			public void mouseDragged(java.awt.event.MouseEvent e) {
 				if (isDragged) {
-					loc = new Point(jFrame.getLocation().x + e.getX() - tmp.x,
-							jFrame.getLocation().y + e.getY() - tmp.y);
-					jFrame.setLocation(loc);
+					loc = new Point(component.getLocation().x + e.getX() - tmp.x,
+							component.getLocation().y + e.getY() - tmp.y);
+					component.setLocation(loc);
 				}
 			}
 		});
