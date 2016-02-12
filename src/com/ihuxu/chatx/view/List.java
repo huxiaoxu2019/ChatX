@@ -34,8 +34,8 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	JScrollPane listScrollPane;
 	JLabel[] friendListLabel, friendListNicknameLabel;
 	JPanel[] friendListPanel;
-	private int currentFriendListPanelIndex, lastClickFriendListPanelIndex = -1;
-	private long lastUpdateGTimestamp, lastClickFriendListPanelTimestamp = -1;
+	private int currentFriendListPanelIndex = -1, lastClickFriendListPanelIndex = -1;
+	private long lastUpdateGTimestamp = -1, lastClickFriendListPanelTimestamp = -1;
 	
 	public List() {
 		/** main panel**/
