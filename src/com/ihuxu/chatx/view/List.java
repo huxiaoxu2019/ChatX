@@ -1,20 +1,16 @@
 package com.ihuxu.chatx.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.Date;
@@ -26,11 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 
 public class List extends CommonView implements KeyListener, MouseListener {
@@ -281,7 +272,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		}
 		long now = new Date().getTime();
 //		System.out.println("last udpateG timestamp:" + this.lastUpdateGTimestamp + " diff:" + (now - this.lastUpdateGTimestamp));
-		if(now - this.lastUpdateGTimestamp > 20 || now - this.lastUpdateGTimestamp < 5) {
+		if(now - this.lastUpdateGTimestamp > 50 || now - this.lastUpdateGTimestamp < 5) {
 			this.lastUpdateGTimestamp = now;
 			List.this.paint(List.this.getGraphics());
 		}
