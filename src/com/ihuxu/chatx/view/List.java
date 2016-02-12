@@ -34,8 +34,8 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	JScrollPane listScrollPane;
 	JLabel[] friendListLabel, friendListNicknameLabel;
 	JPanel[] friendListPanel;
-	private int currentFriendListPanelIndex = -1;
-	private long lastUpdateGTimestamp = -1;
+	private int currentFriendListPanelIndex, lastClickFriendListPanelIndex = -1;
+	private long lastUpdateGTimestamp, lastClickFriendListPanelTimestamp = -1;
 	
 	public List() {
 		/** main panel**/
@@ -310,7 +310,19 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		}
 		
 		public void mouseClicked(MouseEvent e) {
-			/** set the last current panel to normal status.**/
+			long now = new Date().getTime();
+			if(List.this.lastClickFriendListPanelIndex == this.index) {
+				if(now - List.this.lastClickFriendListPanelTimestamp < 500) {
+					/** double clicked event on the friendlist jpanel to open the chat window. **/
+					System.out.println("Open the chat window.");
+					new Chat();
+				}
+			}
+			/** remember the lastClick info. **/
+			List.this.lastClickFriendListPanelTimestamp = now;
+			List.this.lastClickFriendListPanelIndex 	= this.index;
+			
+			/** set the last current panel to normal status. **/
 			if(List.this.currentFriendListPanelIndex != -1) {
 				List.this.friendListPanel[List.this.currentFriendListPanelIndex].setOpaque(false);
 			}
