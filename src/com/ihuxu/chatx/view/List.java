@@ -40,7 +40,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	JLabel leftTopTitleLabel, avatarLabel, nickNameLabel, searchLabel;
 	JTextField searchInput;
 	JScrollPane listScrollPane;
-	JLabel[] friendListLabel;
+	JLabel[] friendListLabel, friendListNicknameLabel;
 	JPanel[] friendListPanel;
 	private int currentFriendListPanelIndex = -1;
 	
@@ -128,15 +128,19 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		this.listScrollPane.getViewport().setBackground(new Color(1, 1, 1, 0.5f));
 		
 		/** friendlist jlabel **/
+		int friendListCount  = 20;
 		this.scrollPanePanel = new JPanel();
-		this.scrollPanePanel.setPreferredSize(new Dimension(260, 20 * 50));
+		this.scrollPanePanel.setPreferredSize(new Dimension(260, friendListCount * 50));
 		this.scrollPanePanel.setOpaque(false);
 		this.scrollPanePanel.setLayout(null);
-		this.friendListLabel = new JLabel[20];
-		this.friendListPanel = new JPanel[20];
+		this.friendListLabel = new JLabel[friendListCount];
+		this.friendListPanel = new JPanel[friendListCount];
+		this.friendListNicknameLabel = new JLabel[friendListCount];
 		
 		for(int i = 0; i < this.friendListLabel.length; i++) {
 			this.friendListPanel[i] = new JPanel();
+			this.friendListNicknameLabel[i] = new JLabel("一半记忆的1720");
+			this.friendListNicknameLabel[i].setBounds(60, -10, 100, 50);
 			this.friendListPanel[i].addMouseListener(new FriendListPanelListener(i));
 			this.friendListPanel[i].setOpaque(false);
 			this.friendListPanel[i].setLayout(null);
@@ -146,12 +150,13 @@ public class List extends CommonView implements KeyListener, MouseListener {
 				top = 1;
 			}
 			this.friendListPanel[i].setBorder(BorderFactory.createMatteBorder(top, 0, 1, 0, new Color(220, 219, 222)));
-			this.friendListLabel[i] = new JLabel(new ImageIcon("resource/image/avatar_40_40.png"));
+			int randomHeadIndex = (int) Math.floor(Math.random() * 100);
+			this.friendListLabel[i] = new JLabel(new ImageIcon("resource/image/head/" + randomHeadIndex + ".png"));
 			this.friendListLabel[i].setBounds(2, 0, 50, 50);
+			this.friendListPanel[i].add(this.friendListNicknameLabel[i]);
 			this.friendListPanel[i].add(this.friendListLabel[i]);
 			this.scrollPanePanel.add(this.friendListPanel[i]);
 		}
-		
 		
 		this.listScrollPane.setViewportView(this.scrollPanePanel);
 		this.listScrollPane.addMouseWheelListener(new FriendListScrollPaneMouseWheelListener());
@@ -286,7 +291,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 			if(this.index == List.this.currentFriendListPanelIndex) {
 				return;
 			}
-			System.out.println("mouse entered the friendlist panel event.");
+//			System.out.println("mouse entered the friendlist panel event.");
 			JPanel jPanel = (JPanel)e.getSource();
 			jPanel.setOpaque(true);
 			jPanel.setBackground(new Color(249, 238, 194));
@@ -298,7 +303,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 			if(this.index == List.this.currentFriendListPanelIndex) {
 				return;
 			}
-			System.out.println("mouse exited the friendlist panel event.");
+//			System.out.println("mouse exited the friendlist panel event.");
 			JPanel jPanel = (JPanel)e.getSource();
 			jPanel.setOpaque(false);
 			List.this.updateG();
