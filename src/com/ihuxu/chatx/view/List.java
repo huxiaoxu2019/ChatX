@@ -330,7 +330,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 			List.this.currentFriendListPanelIndex = this.index;
 			List.this.friendListPanel[this.index].setOpaque(true);
 			List.this.friendListPanel[this.index].setBackground(new Color(250, 233, 172));
-//			System.out.println("mose clicked the friendlist panel event.");
+//			System.out.println("mouse clicked the friendlist panel event.");
 			List.this.updateG();
 		}
 		
