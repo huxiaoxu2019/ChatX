@@ -17,6 +17,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -43,9 +44,9 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	JLabel[] friendListLabel, friendListNicknameLabel;
 	JPanel[] friendListPanel;
 	private int currentFriendListPanelIndex = -1;
+	private long lastUpdateGTimestamp = -1;
 	
 	public List() {
-		
 		/** main panel**/
 		this.backgroundPanel = new BackgroundPanel();
 		this.backgroundPanel.setLayout(null);
@@ -275,7 +276,15 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	}
 	
 	public void updateG() {
-		List.this.paint(List.this.getGraphics());
+		if(this.lastUpdateGTimestamp == -1) {
+			this.lastUpdateGTimestamp = new Date().getTime();
+		}
+		long now = new Date().getTime();
+//		System.out.println("last udpateG timestamp:" + this.lastUpdateGTimestamp + " diff:" + (now - this.lastUpdateGTimestamp));
+		if(now - this.lastUpdateGTimestamp > 20 || now - this.lastUpdateGTimestamp < 5) {
+			this.lastUpdateGTimestamp = now;
+			List.this.paint(List.this.getGraphics());
+		}
 	}
 	
 	class FriendListPanelListener extends MouseAdapter{
@@ -318,6 +327,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 			List.this.currentFriendListPanelIndex = this.index;
 			List.this.friendListPanel[this.index].setOpaque(true);
 			List.this.friendListPanel[this.index].setBackground(new Color(250, 233, 172));
+//			System.out.println("mose clicked the friendlist panel event.");
 			List.this.updateG();
 		}
 		
