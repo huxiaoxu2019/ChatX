@@ -142,7 +142,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 				top = 1;
 			}
 			this.friendListPanel[i].setBorder(BorderFactory.createMatteBorder(top, 0, 1, 0, new Color(220, 219, 222)));
-			int randomHeadIndex = (int) Math.floor(Math.random() * 100);
+			int randomHeadIndex = (int) Math.ceil(Math.random() * 100);
 			this.friendListLabel[i] = new JLabel(new ImageIcon("resource/image/head/" + randomHeadIndex + ".png"));
 			this.friendListLabel[i].setBounds(2, 0, 50, 50);
 			this.friendListPanel[i].add(this.friendListNicknameLabel[i]);
@@ -164,7 +164,9 @@ public class List extends CommonView implements KeyListener, MouseListener {
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.addMouseListener(this);
-		this.setLocation(screenSize.width / 2 - 280 /2 , screenSize.height / 2 - 700 / 2);
+		int widthPos = screenSize.width / 4;
+		if(widthPos < 300) widthPos = 300;
+		this.setLocation(screenSize.width - (screenSize.width / 4), screenSize.height / 2 - 700 / 2);
 		this.setUndecorated(true);
 		this.setSize(new Dimension(280, 700));
 		this.setResizable(false);
