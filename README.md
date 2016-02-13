@@ -7,7 +7,7 @@ The blog for this project: [www.ihuxu.com/blog/java-chat-client-setup-like-qq-in
 ## Demo
 - The Login interface
 
-    ![login](https://raw.githubusercontent.com/GenialX/ChatX/master/resource/screen/login.png)
+    <image src="https://raw.githubusercontent.com/GenialX/ChatX/master/resource/screen/login.png" width="430" height="330" />
 - The Friend List interface
 
-    ![friendlist](https://raw.githubusercontent.com/GenialX/ChatX/master/resource/screen/friend_list.jpg)
+    <image src="https://raw.githubusercontent.com/GenialX/ChatX/master/resource/screen/friend_list.jpg" width="280" height="700" />
