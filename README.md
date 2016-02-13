@@ -1,6 +1,9 @@
 # ChatX
 The chat room like the QQ interface in java, named ChatX, including the server and client source code.
 
+## Source
+The blog for this project: [www.ihuxu.com/blog/java-chat-client-setup-like-qq-interface](http://www.ihuxu.com/blog/java-chat-client-setup-like-qq-interface/)
+
 ## Demo
 - The Login interface
 
