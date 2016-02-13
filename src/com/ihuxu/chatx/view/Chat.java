@@ -3,18 +3,12 @@ package com.ihuxu.chatx.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import com.ihuxu.chatx.view.List.BackgroundPanel;
 
 public class Chat extends CommonView implements MouseListener{
 
