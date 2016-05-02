@@ -2,15 +2,15 @@ package com.ihuxu.chatxserver.common.model;
 
 import java.io.Serializable;
 
-public class MessageManager implements Manager, Serializable{
+public class MessagePackage implements Package, Serializable{
 
 	private static final long serialVersionUID = 5090328872687319042L;
 	
-	private int type = MessageManager.TYPE_UNKNOWN;
+	private int type = MessagePackage.TYPE_UNKNOWN;
 	
 	private TextMessage textMessage;
 	
-	public MessageManager(int type) {
+	public MessagePackage(int type) {
 		this.type = type;
 	}
 	

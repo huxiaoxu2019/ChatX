@@ -1,23 +1,40 @@
 package com.ihuxu.chatxserver.common.model;
 
-import java.util.HashMap;
 
 public class TextMessage extends AbstractMessage {
 
 	private static final long serialVersionUID = 5162083703674962610L;
 	
-	private HashMap<String, String> message = new HashMap<String, String>();
+	private long to;
+	public long getTo() {
+		return to;
+	}
+
+	public void setTo(long to) {
+		this.to = to;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public long getFrom() {
+		return from;
+	}
+
+	public void setFrom(long from) {
+		this.from = from;
+	}
+
+	private String content;
+	private long from;
 	
 	public TextMessage() {
 		super(TextMessage.TYPE_TEXT);
-	}
-	
-	public String set(String key, String value) {
-		return this.message.put(key, value);
-	}
-	
-	public String get(String key) {
-		return this.message.get(key);
 	}
 	
 }

@@ -224,9 +224,6 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 					System.out.println("recieved the enter key pressed event from inputArea.");
 					this.sendChatMsg();
 				break;
-				case KeyEvent.VK_ALT:
-					this.sendMsgTest();
-				break;
 				default:
 				break;
 			}
@@ -248,34 +245,15 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		}
 	}
 	
-	/** for test **/
-	Socket socket ;
-	ObjectOutputStream o ;
-	private void sendMsgTest() {
-		try {
-			if(this.socket == null) socket = new Socket("127.0.0.1", 1720);
-			if(this.o == null) o = new ObjectOutputStream(socket.getOutputStream());
-			TextMessage textMessage = new TextMessage();
-			textMessage.set("uid", "233");
-			textMessage.set("hello", "work");
-			textMessage.set("clientKey", "123123123");
-			MessageManager mM = new MessageManager(MessageManager.TYPE_CHAT_TEXT_MSG);
-			mM.setTextMessage(textMessage);
-			o.writeObject(mM);
-		} catch (IOException e) {
-			try {
-				this.socket = new Socket("127.0.0.1", 1720);
-				this.o = new ObjectOutputStream(socket.getOutputStream());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-	}
-	
 	private void sendChatMsg(){
 		if(this.inputArea.getText().replaceAll("\n", "").equals("")) return;
-		this.displayArea.append(this.inputArea.getText() + "\n");
+		String content = this.inputArea.getText();
+		try {
+			com.ihuxu.chatx.model.Chat.sendTextMsg(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.displayArea.append(content + "\n");
 		this.clearInputArea();
 	}
 	

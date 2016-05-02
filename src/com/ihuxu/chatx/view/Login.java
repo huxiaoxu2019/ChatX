@@ -2,7 +2,9 @@ package com.ihuxu.chatx.view;
 
 import javax.swing.*;
 
+import com.ihuxu.chatx.conf.Common;
 import com.ihuxu.chatx.model.Member;
+import com.ihuxu.chatx.util.Session;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -254,6 +256,7 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 		if(Member.checkLogin(username, password) == true) {
 			System.out.println("login seccussfully.");
 			this.dispose(); 
+			Session.set(Common.SESSION_USER_KEY, "287156904");
 			new List();
 		} else {
 			System.out.println("login failed.");
