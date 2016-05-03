@@ -25,7 +25,7 @@ public class Server {
 	private Socket getSocket() {
 		if(Server.socket == null) {
 			try {
-				Server.socket = new Socket("127.0.0.1", 1720);
+				Server.socket = new Socket(com.ihuxu.chatx.conf.Server.HOST, com.ihuxu.chatx.conf.Server.PORT);
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
