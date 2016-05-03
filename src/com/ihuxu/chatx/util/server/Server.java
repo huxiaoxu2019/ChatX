@@ -71,4 +71,23 @@ public class Server {
 		return (MessagePackage) in.readObject();
 	}
 	
+	public static void close() {
+		try {
+			if(Server.in != null) {
+				Server.in.close();
+				Server.in = null;
+			}
+			if(Server.out != null) {
+				Server.out.close();
+				Server.out = null;
+			}
+			if(Server.socket != null) {
+				Server.socket.close();
+				Server.socket = null;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

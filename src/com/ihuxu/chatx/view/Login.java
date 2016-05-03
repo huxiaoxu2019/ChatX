@@ -3,6 +3,7 @@ package com.ihuxu.chatx.view;
 import javax.swing.*;
 
 import com.ihuxu.chatx.model.Member;
+import com.ihuxu.chatx.util.server.ServerThread;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -263,7 +264,9 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 		if(login) {
 			System.out.println("login seccussfully.");
 			this.dispose(); 
-			new List();
+			List list = new List();
+			ServerThread serverThread = new ServerThread(list);
+			serverThread.start();
 		} else {
 			System.out.println("login failed.");
 		}
