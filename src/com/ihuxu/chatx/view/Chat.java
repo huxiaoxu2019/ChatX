@@ -9,9 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,10 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-
-import com.ihuxu.chatxserver.common.model.MessageManager;
-import com.ihuxu.chatxserver.common.model.TextMessage;
 
 public class Chat extends CommonView implements MouseListener, KeyListener{
 

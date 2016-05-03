@@ -57,13 +57,18 @@ public class Server {
 		return Server.in;
 	}
 	
-	public static void WriteMessagePackage(MessagePackage obj) {
+	public static void writeMessagePackage(MessagePackage obj) {
 		ObjectOutputStream out = Server.getInstance().getOutputStream();
 		try {
 			out.writeObject(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static MessagePackage readMessagePackage() throws IOException, ClassNotFoundException {
+		ObjectInputStream in = Server.getInstance().getInputStream();
+		return (MessagePackage) in.readObject();
 	}
 	
 }

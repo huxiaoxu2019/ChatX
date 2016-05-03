@@ -2,15 +2,14 @@ package com.ihuxu.chatx.view;
 
 import javax.swing.*;
 
-import com.ihuxu.chatx.conf.Common;
 import com.ihuxu.chatx.model.Member;
-import com.ihuxu.chatx.util.Session;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class Login extends CommonView implements MouseListener, KeyListener{
  
@@ -251,12 +250,19 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 	}
 	
 	private void login() {
-		String username = this.usernameInput.getText();
+		long uid = Long.parseLong(this.usernameInput.getText());
 		String password = new String(this.passwordInput.getPassword());
-		if(Member.checkLogin(username, password) == true) {
+		boolean login = false;
+		try {
+			login = Member.checkLogin(uid, password);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(login) {
 			System.out.println("login seccussfully.");
 			this.dispose(); 
-			Session.set(Common.SESSION_USER_KEY, "287156904");
 			new List();
 		} else {
 			System.out.println("login failed.");
