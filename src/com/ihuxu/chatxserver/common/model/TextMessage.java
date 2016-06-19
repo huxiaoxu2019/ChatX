@@ -5,7 +5,10 @@ public class TextMessage extends AbstractMessage {
 
 	private static final long serialVersionUID = 5162083703674962610L;
 	
-	private long to;
+	private long to;	
+	private String content;
+	private long from;
+	
 	public long getTo() {
 		return to;
 	}
@@ -29,9 +32,6 @@ public class TextMessage extends AbstractMessage {
 	public void setFrom(long from) {
 		this.from = from;
 	}
-
-	private String content;
-	private long from;
 	
 	public TextMessage() {
 		super(TextMessage.TYPE_TEXT);

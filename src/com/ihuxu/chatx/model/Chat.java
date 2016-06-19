@@ -19,7 +19,7 @@ public class Chat {
 			tM.setContent(content);
 			MessagePackage mP = new MessagePackage(MessagePackage.TYPE_CHAT_TEXT_MSG);
 			mP.setTextMessage(tM);
-			Server.writeMessagePackage(mP);
+			Server.getInstance().writeMessagePackage(mP);
 		}
 	}
 	public static void sendImgMsg(String content) {}

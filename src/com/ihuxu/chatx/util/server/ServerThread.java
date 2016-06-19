@@ -2,8 +2,11 @@ package com.ihuxu.chatx.util.server;
 
 import java.io.IOException;
 
+import com.ihuxu.chatx.conf.Common;
+import com.ihuxu.chatx.util.Session;
 import com.ihuxu.chatx.view.List;
 import com.ihuxu.chatxserver.common.model.MessagePackage;
+import com.ihuxu.chatxserver.common.model.TextMessage;
 
 public class ServerThread extends Thread {
 	
@@ -41,12 +44,44 @@ public class ServerThread extends Thread {
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
+				e1.printStackTrace();
 				/**
 				 * TODO alert the server has gone away.
 				 */
-				Server.close();
+				Server.getInstance().close();
 				ServerThread.setServerActive(false);
-				e1.printStackTrace();
+
+				/** re-login to the server untill the server is connected. **/
+				while(ServerThread.isServerActive() == false) {
+					System.out.println("reconnection to start in " + com.ihuxu.chatx.conf.Server.RECONNECTION_INTERVAL + " milliseconds...");
+					try {
+						Thread.sleep(com.ihuxu.chatx.conf.Server.RECONNECTION_INTERVAL);
+					} catch (InterruptedException e2) {
+						e2.printStackTrace();
+					}
+					try {
+						long uid = Long.parseLong(Session.get(Common.SESSION_USER_KEY));
+						String password = Session.get(Common.SESSION_USER_PWD);
+						TextMessage tM = new TextMessage();
+						tM.setFrom(uid);
+						tM.setContent(password);
+						MessagePackage mP = new MessagePackage(MessagePackage.TYPE_LOGIN_MSG);
+						mP.setTextMessage(tM);
+						Server.getInstance().writeMessagePackage(mP);
+						MessagePackage response = Server.getInstance().readMessagePackage();
+						if(response.getType() == MessagePackage.TYPE_LOGIN_SUC_MSG) {
+							System.out.println("The re-connect to server that is successfull。");
+							ServerThread.setServerActive(true);
+						} else {
+							System.out.println("The re-connect to server that is failed, so sleep 1 second to re-connect...");
+							
+						}
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

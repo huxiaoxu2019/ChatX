@@ -26,6 +26,8 @@ public class Server {
 		if(Server.socket == null) {
 			try {
 				Server.socket = new Socket(com.ihuxu.chatx.conf.Server.HOST, com.ihuxu.chatx.conf.Server.PORT);
+				Server.socket.setKeepAlive(true);
+				Server.socket.setSoTimeout(com.ihuxu.chatx.conf.Server.SERVER_TIMEOUT);
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -57,7 +59,7 @@ public class Server {
 		return Server.in;
 	}
 	
-	public static void writeMessagePackage(MessagePackage obj) {
+	public void writeMessagePackage(MessagePackage obj) {
 		ObjectOutputStream out = Server.getInstance().getOutputStream();
 		try {
 			out.writeObject(obj);
@@ -66,12 +68,12 @@ public class Server {
 		}
 	}
 	
-	public static MessagePackage readMessagePackage() throws IOException, ClassNotFoundException {
+	public MessagePackage readMessagePackage() throws IOException, ClassNotFoundException {
 		ObjectInputStream in = Server.getInstance().getInputStream();
 		return (MessagePackage) in.readObject();
 	}
 	
-	public static void close() {
+	public void close() {
 		try {
 			if(Server.in != null) {
 				Server.in.close();
