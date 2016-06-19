@@ -58,13 +58,13 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 
 		/** loginInput Panel **/
 		this.loginInputPanel = new JPanel();
-		this.loginInputPanel.setBackground(new Color(235, 242, 249));
 		GridBagLayout loginInputPanelLayout = new GridBagLayout();
 		GridBagConstraints loginInputPanelConstraints = new GridBagConstraints();
 		loginInputPanelConstraints.weightx = 1;
 		loginInputPanelConstraints.weighty = 1;
 		this.loginInputPanel.setLayout(loginInputPanelLayout);
 		this.loginInputPanel.setPreferredSize(new Dimension(400, 100));
+		this.loginInputPanel.setBackground(new Color(235, 242, 249));
 		loginInputPanelConstraints.fill = GridBagConstraints.BOTH;
 
 		this.loginInputLeftPanel = new JPanel();
@@ -88,9 +88,11 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 		this.loginInputCenterTopPanel = new JPanel();
 		this.loginInputCenterTopPanel.setLayout(null);
 		this.loginInputCenterTopPanel.setPreferredSize(new Dimension(210, 76));
+		this.loginInputCenterTopPanel.setBackground(new Color(235, 242, 249));
 		this.loginInputCenterBottomPanel = new JPanel();
 		this.loginInputCenterBottomPanel.setLayout(null);
 		this.loginInputCenterBottomPanel.setPreferredSize(new Dimension(210, 24));
+		this.loginInputCenterBottomPanel.setBackground(new Color(235, 242, 249));
 		GridBagLayout loginInputCenterPanelLayout = new GridBagLayout();
 		GridBagConstraints loginInputCenterPanelConstraints = new GridBagConstraints();
 		this.loginInputCenterPanel.setLayout(loginInputCenterPanelLayout);
