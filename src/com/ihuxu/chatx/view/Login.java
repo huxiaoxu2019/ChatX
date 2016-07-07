@@ -270,6 +270,9 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 			ServerThread serverThread = new ServerThread(list);
 			serverThread.start();
 		} else {
+			/**
+			 * @todo there is a bug for the another try after the failed.
+			 */
 			System.out.println("login failed.");
 		}
 	}

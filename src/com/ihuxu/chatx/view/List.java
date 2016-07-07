@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import com.ihuxu.chatx.util.ChatViewManager;
+import com.ihuxu.chatxserver.common.model.TextMessage;
 
 public class List extends CommonView implements KeyListener, MouseListener {
 
@@ -282,6 +284,9 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	
 	class FriendListPanelListener extends MouseAdapter{
 		
+		/**
+		 * For current the index is the user's id.
+		 */
 		private int index;
 		
 		public FriendListPanelListener(int index) {
@@ -317,7 +322,8 @@ public class List extends CommonView implements KeyListener, MouseListener {
 				if(now - List.this.lastClickFriendListPanelTimestamp < 500) {
 					/** double clicked event on the friendlist jpanel to open the chat window. **/
 					System.out.println("Open the chat window.");
-					new Chat();
+					Chat chat = new Chat(this.index);
+					ChatViewManager.setChatView(Long.toString(this.index), chat);
 				}
 			}
 			/** remember the lastClick info. **/
@@ -340,6 +346,21 @@ public class List extends CommonView implements KeyListener, MouseListener {
 	
 	class FriendListScrollPaneMouseWheelListener implements MouseWheelListener{
 		public void mouseWheelMoved(MouseWheelEvent e) {}
+	}
+	
+	/**
+	 * Append the textMessage package to the specific chat window.
+	 * 
+	 * @param textMessage
+	 */
+	public void appendTextMessage(TextMessage textMessage) {
+		try {
+			Chat chat = ChatViewManager.getChatView(Long.toString(textMessage.getTo()));
+			chat.appendChatMsg(textMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
 	}
 	
 }

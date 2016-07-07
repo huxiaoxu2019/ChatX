@@ -17,6 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.ihuxu.chatx.util.ChatViewManager;
+import com.ihuxu.chatxserver.common.model.TextMessage;
+
 public class Chat extends CommonView implements MouseListener, KeyListener{
 
 	private static final long serialVersionUID = -6919521642788139246L;
@@ -33,7 +36,12 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 	
 	JTextArea displayArea;
 	
-	public Chat() {
+	private long uid;
+	
+	public Chat(long uid) {
+		
+		/** initial local variables **/
+		this.uid = uid;
 
 		/** background panel **/
 		this.backgroundPanel = new BackgroundPanel();
@@ -167,6 +175,7 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		if(e.getSource() == this.closeButton) {
 			/** close button clicked event **/
 			System.out.println("close button clicked event on the chat window.");
+			ChatViewManager.removeChatView(Long.toString(this.uid));
 			this.dispose();
 		} else if(e.getSource() == this.sendButton) {
 			System.out.println("send button clicked event on the chat window.");
@@ -252,5 +261,16 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 	
 	private void clearInputArea(){
 		this.inputArea.setText("");
+	}
+	
+	/**
+	 * Append the textMessage to the current chat window.
+	 * 
+	 * @param textMessage
+	 */
+	public void appendChatMsg(TextMessage textMessage) {
+		System.out.println("print the textMessage.");
+		
+		return;
 	}
 }

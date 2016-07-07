@@ -33,6 +33,7 @@ public class ServerThread extends Thread {
 				switch(messagePackage.getType()) {
 				case MessagePackage.TYPE_CHAT_TEXT_MSG:
 					System.out.println("recieve the chat text msg");
+					this.list.appendTextMessage(messagePackage.getTextMessage());
 					break;
 				case MessagePackage.TYPE_LOGIN_FAI_MSG:
 					break;
