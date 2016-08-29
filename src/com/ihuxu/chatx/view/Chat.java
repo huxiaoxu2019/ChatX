@@ -17,7 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 import com.ihuxu.chatxserver.common.model.MessageManager;
 import com.ihuxu.chatxserver.common.model.TextMessage;
@@ -32,7 +34,12 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 	
 	JLabel avatarLabel, nickNameLabel;
 	
-	JTextArea inputArea, displayArea;
+	JTextArea inputArea;
+
+	JScrollPane displayScoll;
+	
+	JTextArea displayArea;
+	
 	public Chat() {
 
 		/** background panel **/
@@ -78,12 +85,22 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		
 		/** center panel **/
 		this.centerPanel = new JPanel();
+		this.centerPanel.setLayout(null);
 		this.centerPanel.setPreferredSize(new Dimension(600, 280));
 		this.centerPanel.setBounds(0, 80, 600, 280);
-		this.centerPanel.setBackground(new Color(1, 1, 1, 0.5f));
-//		this.centerPanel.setOpaque(false);
-//		this.centerPanel.setBackground(Color.GREEN);
+		this.centerPanel.setBackground(new Color(1, 1, 1, 0.8f));
+
+		/** display area **/
+		this.displayArea = new JTextArea();
+		this.displayArea.setBounds(0, 0, 600, 270);
+		this.displayArea.setEditable(false);
 		
+		this.displayScoll = new JScrollPane();
+		this.displayScoll.setBorder(null);
+		this.displayScoll.setBounds(0, 0, 600, 270);
+		
+		this.displayScoll.setViewportView(this.displayArea);
+		this.centerPanel.add(this.displayScoll);
 		this.backgroundPanel.add(this.centerPanel);
 		
 		/** bottom panel **/
@@ -91,13 +108,12 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		this.bottomPanel.setLayout(null);
 		this.bottomPanel.setBounds(0, 360, 600, 140);
 		this.bottomPanel.setBackground(new Color(1, 1, 1, 0.5f));
-//		this.bottomPanel.setOpaque(false);
-//		this.bottomPanel.setBackground(Color.GRAY);
 		
 		/** input area **/
 		this.inputArea = new JTextArea();
 		this.inputArea.setBounds(0, 0, 600, 100);
 		this.inputArea.addKeyListener(this);
+		
 		this.bottomPanel.add(this.inputArea);
 		this.backgroundPanel.add(this.bottomPanel);
 		
@@ -161,6 +177,7 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 			this.dispose();
 		} else if(e.getSource() == this.sendButton) {
 			System.out.println("send button clicked event on the chat window.");
+			this.sendChatMsg();
 		}
 	}
 
@@ -192,13 +209,11 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		
 	}
 
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -207,7 +222,7 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 			switch(e.getKeyCode()) {
 				case KeyEvent.VK_ENTER:
 					System.out.println("recieved the enter key pressed event from inputArea.");
-					this.sendButton.doClick();
+					this.sendChatMsg();
 				break;
 				case KeyEvent.VK_ALT:
 					this.sendMsgTest();
@@ -218,11 +233,19 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		}
 	}
 
-
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == this.inputArea) {
+			switch(e.getKeyCode()) {
+				case KeyEvent.VK_ENTER:
+					System.out.println("recieved the enter key released event from inputArea.");
+					this.clearInputArea();
+				break;
+				default:
+				break;
+			}
+		}
 	}
 	
 	/** for test **/
@@ -250,4 +273,13 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		}
 	}
 	
+	private void sendChatMsg(){
+		if(this.inputArea.getText().replaceAll("\n", "").equals("")) return;
+		this.displayArea.append(this.inputArea.getText() + "\n");
+		this.clearInputArea();
+	}
+	
+	private void clearInputArea(){
+		this.inputArea.setText("");
+	}
 }
