@@ -3,12 +3,14 @@ package com.ihuxu.chatx.view;
 import javax.swing.*;
 
 import com.ihuxu.chatx.model.Member;
+import com.ihuxu.chatx.util.server.ServerThread;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class Login extends CommonView implements MouseListener, KeyListener{
  
@@ -56,13 +58,13 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 
 		/** loginInput Panel **/
 		this.loginInputPanel = new JPanel();
-		this.loginInputPanel.setBackground(new Color(235, 242, 249));
 		GridBagLayout loginInputPanelLayout = new GridBagLayout();
 		GridBagConstraints loginInputPanelConstraints = new GridBagConstraints();
 		loginInputPanelConstraints.weightx = 1;
 		loginInputPanelConstraints.weighty = 1;
 		this.loginInputPanel.setLayout(loginInputPanelLayout);
 		this.loginInputPanel.setPreferredSize(new Dimension(400, 100));
+		this.loginInputPanel.setBackground(new Color(235, 242, 249));
 		loginInputPanelConstraints.fill = GridBagConstraints.BOTH;
 
 		this.loginInputLeftPanel = new JPanel();
@@ -86,9 +88,11 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 		this.loginInputCenterTopPanel = new JPanel();
 		this.loginInputCenterTopPanel.setLayout(null);
 		this.loginInputCenterTopPanel.setPreferredSize(new Dimension(210, 76));
+		this.loginInputCenterTopPanel.setBackground(new Color(235, 242, 249));
 		this.loginInputCenterBottomPanel = new JPanel();
 		this.loginInputCenterBottomPanel.setLayout(null);
 		this.loginInputCenterBottomPanel.setPreferredSize(new Dimension(210, 24));
+		this.loginInputCenterBottomPanel.setBackground(new Color(235, 242, 249));
 		GridBagLayout loginInputCenterPanelLayout = new GridBagLayout();
 		GridBagConstraints loginInputCenterPanelConstraints = new GridBagConstraints();
 		this.loginInputCenterPanel.setLayout(loginInputCenterPanelLayout);
@@ -249,13 +253,26 @@ public class Login extends CommonView implements MouseListener, KeyListener{
 	}
 	
 	private void login() {
-		String username = this.usernameInput.getText();
+		long uid = Long.parseLong(this.usernameInput.getText());
 		String password = new String(this.passwordInput.getPassword());
-		if(Member.checkLogin(username, password) == true) {
+		boolean login = false;
+		try {
+			login = Member.checkLogin(uid, password);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(login) {
 			System.out.println("login seccussfully.");
 			this.dispose(); 
-			new List();
+			List list = new List();
+			ServerThread serverThread = new ServerThread(list);
+			serverThread.start();
 		} else {
+			/**
+			 * @todo there is a bug for the another try after the failed.
+			 */
 			System.out.println("login failed.");
 		}
 	}

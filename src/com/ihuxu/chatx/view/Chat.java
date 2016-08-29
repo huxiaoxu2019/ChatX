@@ -9,9 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,9 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 
-import com.ihuxu.chatxserver.common.model.MessageManager;
+import com.ihuxu.chatx.util.ChatViewManager;
 import com.ihuxu.chatxserver.common.model.TextMessage;
 
 public class Chat extends CommonView implements MouseListener, KeyListener{
@@ -40,7 +36,12 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 	
 	JTextArea displayArea;
 	
-	public Chat() {
+	private long uid;
+	
+	public Chat(long uid) {
+		
+		/** initial local variables **/
+		this.uid = uid;
 
 		/** background panel **/
 		this.backgroundPanel = new BackgroundPanel();
@@ -174,6 +175,7 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		if(e.getSource() == this.closeButton) {
 			/** close button clicked event **/
 			System.out.println("close button clicked event on the chat window.");
+			ChatViewManager.removeChatView(Long.toString(this.uid));
 			this.dispose();
 		} else if(e.getSource() == this.sendButton) {
 			System.out.println("send button clicked event on the chat window.");
@@ -224,9 +226,6 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 					System.out.println("recieved the enter key pressed event from inputArea.");
 					this.sendChatMsg();
 				break;
-				case KeyEvent.VK_ALT:
-					this.sendMsgTest();
-				break;
 				default:
 				break;
 			}
@@ -248,38 +247,30 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		}
 	}
 	
-	/** for test **/
-	Socket socket ;
-	ObjectOutputStream o ;
-	private void sendMsgTest() {
-		try {
-			if(this.socket == null) socket = new Socket("127.0.0.1", 1720);
-			if(this.o == null) o = new ObjectOutputStream(socket.getOutputStream());
-			TextMessage textMessage = new TextMessage();
-			textMessage.set("uid", "233");
-			textMessage.set("hello", "work");
-			textMessage.set("clientKey", "123123123");
-			MessageManager mM = new MessageManager(MessageManager.TYPE_CHAT_TEXT_MSG);
-			mM.setTextMessage(textMessage);
-			o.writeObject(mM);
-		} catch (IOException e) {
-			try {
-				this.socket = new Socket("127.0.0.1", 1720);
-				this.o = new ObjectOutputStream(socket.getOutputStream());
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-	}
-	
 	private void sendChatMsg(){
 		if(this.inputArea.getText().replaceAll("\n", "").equals("")) return;
-		this.displayArea.append(this.inputArea.getText() + "\n");
+		String content = this.inputArea.getText();
+		try {
+			com.ihuxu.chatx.model.Chat.sendTextMsg(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.displayArea.append(content + "\n");
 		this.clearInputArea();
 	}
 	
 	private void clearInputArea(){
 		this.inputArea.setText("");
+	}
+	
+	/**
+	 * Append the textMessage to the current chat window.
+	 * 
+	 * @param textMessage
+	 */
+	public void appendChatMsg(TextMessage textMessage) {
+		System.out.println("print the textMessage.");
+		
+		return;
 	}
 }
