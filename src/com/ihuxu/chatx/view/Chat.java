@@ -255,7 +255,8 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.displayArea.append(content + "\n");
+		this.displayArea.append(content + "\n\n");
+		this.displayArea.setCaretPosition(this.displayArea.getText().length());
 		this.clearInputArea();
 	}
 	
@@ -270,7 +271,8 @@ public class Chat extends CommonView implements MouseListener, KeyListener{
 	 */
 	public void appendChatMsg(TextMessage textMessage) {
 		System.out.println("print the textMessage.");
-		
+		this.displayArea.append(textMessage.getFrom() + " 说：" + textMessage.getContent() + "\n\n");
+		this.displayArea.setCaretPosition(this.displayArea.getText().length());
 		return;
 	}
 }

@@ -321,7 +321,7 @@ public class List extends CommonView implements KeyListener, MouseListener {
 			if(List.this.lastClickFriendListPanelIndex == this.index) {
 				if(now - List.this.lastClickFriendListPanelTimestamp < 500) {
 					/** double clicked event on the friendlist jpanel to open the chat window. **/
-					System.out.println("Open the chat window.");
+					System.out.println("Open the chat window. The current uid is " + this.index);
 					Chat chat = new Chat(this.index);
 					ChatViewManager.setChatView(Long.toString(this.index), chat);
 				}
